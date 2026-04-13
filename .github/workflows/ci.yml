@@ -26,5 +26,8 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm lint
-      - run: pnpm test:coverage
+      - run: pnpm test
+      - name: Coverage (Node 20+ only)
+        if: matrix.node-version != 18
+        run: pnpm test:coverage
       - run: pnpm build
