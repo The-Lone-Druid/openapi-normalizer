@@ -11,7 +11,7 @@ hero:
       link: /guide/getting-started
     - theme: alt
       text: View on GitHub
-      link: https://github.com/zaheedShuruworx/openapi-normalizer
+      link: https://github.com/The-Lone-Druid/openapi-normalizer
 
 features:
   - icon: 🧹

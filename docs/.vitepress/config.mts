@@ -17,7 +17,11 @@ export default defineConfig({
         items: [
           {
             text: 'Changelog',
-            link: 'https://github.com/zaheedShuruworx/openapi-normalizer/releases',
+            link: 'https://github.com/The-Lone-Druid/openapi-normalizer/releases',
+          },
+          {
+            text: 'npm',
+            link: 'https://www.npmjs.com/package/openapi-normalizer',
           },
         ],
       },
@@ -46,7 +50,11 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://github.com/zaheedShuruworx/openapi-normalizer',
+        link: 'https://github.com/The-Lone-Druid/openapi-normalizer',
+      },
+      {
+        icon: 'npm',
+        link: 'https://www.npmjs.com/package/openapi-normalizer',
       },
     ],
 

@@ -43,6 +43,14 @@
     "openapi3"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/The-Lone-Druid/openapi-normalizer.git"
+  },
+  "homepage": "https://the-lone-druid.github.io/openapi-normalizer/",
+  "bugs": {
+    "url": "https://github.com/The-Lone-Druid/openapi-normalizer/issues"
+  },
   "engines": {
     "node": ">=18"
   },
