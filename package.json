@@ -1,0 +1,13 @@
+{
+  "name": "openapi-normalizer",
+  "version": "1.0.0",
+  "description": "Normalizes Postman-exported OpenAPI JSON into clean, standard-compliant OpenAPI 3.x",
+  "main": "normalizer.js",
+  "bin": {
+    "openapi-normalizer": "./normalizer.js"
+  },
+  "scripts": {
+    "normalize": "node normalizer.js"
+  },
+  "license": "MIT"
+}
