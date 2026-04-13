@@ -29,12 +29,24 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Resolve publish command
+        id: publish-cmd
+        env:
+          HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
+        run: |
+          if [ "$HAS_NPM_TOKEN" = "true" ]; then
+            echo "cmd=pnpm release" >> $GITHUB_OUTPUT
+          else
+            echo "cmd=" >> $GITHUB_OUTPUT
+            echo "::warning::NPM_TOKEN secret is not set — skipping publish. Add it in repo Settings → Secrets → Actions."
+          fi
+
       - name: Create Release PR or Publish
         id: changesets
         uses: changesets/action@v1
         with:
           version: pnpm changeset version
-          publish: pnpm release
+          publish: ${{ steps.publish-cmd.outputs.cmd }}
           title: 'chore: version packages'
           commit: 'chore: version packages'
         env:
