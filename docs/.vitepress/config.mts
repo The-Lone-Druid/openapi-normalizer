@@ -1,0 +1,62 @@
+import { defineConfig } from 'vitepress';
+
+export default defineConfig({
+  title: 'OpenAPI Normalizer',
+  description:
+    'Normalize Postman-exported OpenAPI specs & convert Postman Collections to clean OpenAPI 3.x',
+  base: '/openapi-normalizer/',
+
+  head: [['link', { rel: 'icon', href: '/openapi-normalizer/favicon.ico' }]],
+
+  themeConfig: {
+    nav: [
+      { text: 'Guide', link: '/guide/getting-started' },
+      { text: 'API', link: '/api/' },
+      {
+        text: 'v1.0.0',
+        items: [
+          {
+            text: 'Changelog',
+            link: 'https://github.com/zaheedShuruworx/openapi-normalizer/releases',
+          },
+        ],
+      },
+    ],
+
+    sidebar: [
+      {
+        text: 'Guide',
+        items: [
+          { text: 'Getting Started', link: '/guide/getting-started' },
+          { text: 'Normalizer', link: '/guide/normalizer' },
+          { text: 'Converter', link: '/guide/converter' },
+          { text: 'CLI', link: '/guide/cli' },
+        ],
+      },
+      {
+        text: 'API Reference',
+        items: [
+          { text: 'normalize()', link: '/api/' },
+          { text: 'convertCollection()', link: '/api/convert-collection' },
+          { text: 'Types', link: '/api/types' },
+        ],
+      },
+    ],
+
+    socialLinks: [
+      {
+        icon: 'github',
+        link: 'https://github.com/zaheedShuruworx/openapi-normalizer',
+      },
+    ],
+
+    search: {
+      provider: 'local',
+    },
+
+    footer: {
+      message: 'Released under the MIT License.',
+      copyright: 'Copyright © 2026-present',
+    },
+  },
+});

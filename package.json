@@ -1,13 +1,68 @@
 {
   "name": "openapi-normalizer",
   "version": "1.0.0",
-  "description": "Normalizes Postman-exported OpenAPI JSON into clean, standard-compliant OpenAPI 3.x",
-  "main": "normalizer.js",
+  "description": "Normalize Postman-exported OpenAPI specs and convert Postman Collections to clean, standard-compliant OpenAPI 3.x with correlated request/response examples",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
   "bin": {
-    "openapi-normalizer": "./normalizer.js"
+    "openapi-normalizer": "dist/cli.js"
   },
+  "files": [
+    "dist",
+    "LICENSE"
+  ],
   "scripts": {
-    "normalize": "node normalizer.js"
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs",
+    "changeset": "changeset",
+    "release": "pnpm build && changeset publish",
+    "prepublishOnly": "pnpm lint && pnpm test"
   },
-  "license": "MIT"
+  "keywords": [
+    "openapi",
+    "postman",
+    "normalizer",
+    "converter",
+    "swagger",
+    "api",
+    "postman-collection",
+    "openapi3"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@changesets/changelog-github": "^0.6.0",
+    "@changesets/cli": "^2.30.0",
+    "@types/node": "^22.15.0",
+    "@vitest/coverage-v8": "^4.1.4",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.0",
+    "vitepress": "^1.6.4",
+    "vitest": "^4.1.4"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "^6.3.0",
+      "esbuild": "~0.25.0"
+    },
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
 }
