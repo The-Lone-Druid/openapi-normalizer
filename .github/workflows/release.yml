@@ -29,43 +29,17 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      - name: Verify npm token
-        run: |
-          npm whoami --registry https://registry.npmjs.org || echo "::error::NPM_TOKEN is invalid or does not have publish access"
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Configure npm auth for pnpm
-        run: |
-          if [ -n "$NPM_TOKEN" ]; then
-            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> $HOME/.npmrc
-          fi
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Resolve publish command
-        id: publish-cmd
-        run: |
-          if [ -n "$NPM_TOKEN" ]; then
-            echo "cmd=pnpm release" >> $GITHUB_OUTPUT
-          else
-            echo "cmd=" >> $GITHUB_OUTPUT
-            echo "::warning::NPM_TOKEN secret is not set — skipping publish. Add it in repo Settings → Secrets → Actions."
-          fi
-        env:
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-
       - name: Create Release PR or Publish
         id: changesets
         uses: changesets/action@v1
         with:
           version: pnpm changeset version
-          publish: ${{ steps.publish-cmd.outputs.cmd }}
+          publish: pnpm release
           title: 'chore: version packages'
           commit: 'chore: version packages'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
 
       - name: Print npm debug log on failure
         if: failure()
