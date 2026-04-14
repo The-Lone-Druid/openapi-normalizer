@@ -3,8 +3,8 @@ layout: home
 
 hero:
   name: OpenAPI Normalizer
-  text: Clean up your OpenAPI specs
-  tagline: Normalize Postman-exported OpenAPI files & convert Postman Collections to clean, standard-compliant OpenAPI 3.x
+  text: Postman Collections → Clean OpenAPI 3.x
+  tagline: Convert Postman Collections and normalize bloated Postman-exported specs into clean, standard-compliant OpenAPI — ready for Swagger UI, Redocly, Stoplight, and any API client generator.
   actions:
     - theme: brand
       text: Get Started
@@ -14,16 +14,19 @@ hero:
       link: https://github.com/The-Lone-Druid/openapi-normalizer
 
 features:
-  - icon: 🧹
-    title: Normalize
-    details: Strip noisy headers, collapse redundant examples, infer schemas, and reduce file size by 60%+.
   - icon: 🔄
-    title: Convert
-    details: Turn Postman Collections into OpenAPI 3.0.3 with correlated request/response examples.
+    title: Convert Postman Collections
+    details: Turn any Postman Collection (v2.0/v2.1) into an OpenAPI 3.0.3 document with correlated request/response examples — something Postman's own export never does.
+  - icon: 🧹
+    title: Normalize Exported Specs
+    details: Strip noisy headers, collapse redundant examples, infer and merge schemas from example values, and reduce file size by 60%+ on typical Postman exports.
+  - icon: 🚀
+    title: Git-Versioned API Workflow
+    details: Commit your Postman Collection to git, run a single script to generate a normalized OpenAPI spec, and feed it into any code generator for web, mobile, or desktop clients.
   - icon: ⌨️
-    title: CLI & API
-    details: Use from the command line or import as a library in your Node.js project.
+    title: CLI & Programmatic API
+    details: Use from the command line or import as a library in any Node.js project. Chain convert + normalize in one pipeline.
   - icon: 📦
-    title: TypeScript-first
-    details: Full type definitions included. Dual CJS/ESM package with zero runtime dependencies.
+    title: TypeScript-first, Zero Dependencies
+    details: Full type definitions for OpenAPI and Postman types. Dual CJS/ESM package with absolutely no runtime dependencies.
 ---

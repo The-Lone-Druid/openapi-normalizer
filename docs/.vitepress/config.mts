@@ -3,7 +3,7 @@ import { defineConfig } from 'vitepress';
 export default defineConfig({
   title: 'OpenAPI Normalizer',
   description:
-    'Normalize Postman-exported OpenAPI specs & convert Postman Collections to clean OpenAPI 3.x',
+    'Convert Postman Collections to OpenAPI 3.x and normalize bloated Postman-exported specs — correlated examples, inferred schemas, zero dependencies.',
   base: '/openapi-normalizer/',
 
   head: [['link', { rel: 'icon', href: '/openapi-normalizer/favicon.ico' }]],
@@ -35,6 +35,7 @@ export default defineConfig({
           { text: 'Normalizer', link: '/guide/normalizer' },
           { text: 'Converter', link: '/guide/converter' },
           { text: 'CLI', link: '/guide/cli' },
+          { text: 'Use Cases', link: '/guide/use-cases' },
         ],
       },
       {
