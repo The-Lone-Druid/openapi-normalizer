@@ -192,9 +192,7 @@ describe('headersToParameters', () => {
   });
 
   it('omits example for template values', () => {
-    const params = headersToParameters([
-      { key: 'apiKey', value: '{{API_KEY}}' },
-    ]);
+    const params = headersToParameters([{ key: 'apiKey', value: '{{API_KEY}}' }]);
     expect(params[0].example).toBeUndefined();
   });
 });
@@ -206,9 +204,9 @@ describe('getContentType', () => {
   });
 
   it('extracts content type without charset', () => {
-    expect(
-      getContentType([{ key: 'Content-Type', value: 'text/html; charset=utf-8' }]),
-    ).toBe('text/html');
+    expect(getContentType([{ key: 'Content-Type', value: 'text/html; charset=utf-8' }])).toBe(
+      'text/html',
+    );
   });
 });
 

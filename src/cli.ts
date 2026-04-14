@@ -46,9 +46,7 @@ if (args.length === 0 || args.includes('-h') || args.includes('--help')) {
 }
 
 if (args.includes('-v') || args.includes('--version')) {
-  const pkg = JSON.parse(
-    fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf-8'),
-  );
+  const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf-8'));
   console.log(pkg.version);
   process.exit(0);
 }

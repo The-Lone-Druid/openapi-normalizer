@@ -8,7 +8,6 @@ import type {
   OpenAPIResponse,
   OpenAPIMediaType,
   OpenAPIPathItem,
-  HttpMethod,
 } from './types';
 import { HTTP_METHODS } from './types';
 import { inferSchema, mergeSchemas, stripPropertyExamples } from './schema';
@@ -138,9 +137,7 @@ function normalizeOperation(operation: OpenAPIOperation): OpenAPIOperation {
 // Paths normalization
 // ---------------------------------------------------------------------------
 
-function normalizePaths(
-  paths: Record<string, OpenAPIPathItem>,
-): Record<string, OpenAPIPathItem> {
+function normalizePaths(paths: Record<string, OpenAPIPathItem>): Record<string, OpenAPIPathItem> {
   const result: Record<string, OpenAPIPathItem> = {};
   for (const [pathStr, pathItem] of Object.entries(paths)) {
     const normalizedItem: OpenAPIPathItem = { ...pathItem };

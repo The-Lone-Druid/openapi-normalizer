@@ -210,7 +210,10 @@ export function getContentType(headers: PostmanHeader[] | undefined): string {
  */
 export function toOperationId(name: string, method: string, path: string): string {
   const src = name || path;
-  const parts = src.replace(/^\/+/, '').split(/[/\-_]+/).filter(Boolean);
+  const parts = src
+    .replace(/^\/+/, '')
+    .split(/[/\-_]+/)
+    .filter(Boolean);
   if (parts.length === 0) return method.toLowerCase();
   return parts
     .map((p, i) =>
@@ -246,10 +249,7 @@ export interface FlatPostmanItem {
 /**
  * Recursively flatten Postman items, tracking folder names as tags.
  */
-export function flattenItems(
-  items: PostmanItem[],
-  tags: string[] = [],
-): FlatPostmanItem[] {
+export function flattenItems(items: PostmanItem[], tags: string[] = []): FlatPostmanItem[] {
   const result: FlatPostmanItem[] = [];
   for (const item of items) {
     if (isPostmanFolder(item)) {

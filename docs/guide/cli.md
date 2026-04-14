@@ -25,6 +25,7 @@ openapi-normalizer normalize <input.json> [output.json]
 If no output path is given, writes to `<input>.normalized.json`.
 
 **Example:**
+
 ```sh
 $ openapi-normalizer normalize api-export.json
 
@@ -42,6 +43,7 @@ openapi-normalizer convert <collection.json> [output.json]
 If no output path is given, writes to `<input>.openapi.json`.
 
 **Example:**
+
 ```sh
 $ openapi-normalizer convert postman-collection.json api.json
 
@@ -50,14 +52,14 @@ $ openapi-normalizer convert postman-collection.json api.json
 
 ## Options
 
-| Flag | Description |
-|---|---|
-| `-h`, `--help` | Show help message |
+| Flag              | Description         |
+| ----------------- | ------------------- |
+| `-h`, `--help`    | Show help message   |
 | `-v`, `--version` | Show version number |
 
 ## Exit codes
 
-| Code | Meaning |
-|---|---|
-| `0` | Success |
-| `1` | Invalid arguments, file not found, or JSON parse error |
+| Code | Meaning                                                |
+| ---- | ------------------------------------------------------ |
+| `0`  | Success                                                |
+| `1`  | Invalid arguments, file not found, or JSON parse error |

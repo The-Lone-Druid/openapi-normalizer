@@ -91,9 +91,15 @@ export function stripPropertyExamples(schema: JSONSchema): JSONSchema {
       }
       result[k] = cleaned;
     } else if (k === 'items') {
-      result.items = typeof v === 'object' && v !== null ? stripPropertyExamples(v as JSONSchema) : v as JSONSchema;
+      result.items =
+        typeof v === 'object' && v !== null
+          ? stripPropertyExamples(v as JSONSchema)
+          : (v as JSONSchema);
     } else if (k === 'additionalProperties') {
-      result.additionalProperties = typeof v === 'object' && v !== null ? stripPropertyExamples(v as JSONSchema) : v as JSONSchema | boolean;
+      result.additionalProperties =
+        typeof v === 'object' && v !== null
+          ? stripPropertyExamples(v as JSONSchema)
+          : (v as JSONSchema | boolean);
     } else if (k === 'oneOf' || k === 'anyOf' || k === 'allOf') {
       result[k] = (v as JSONSchema[]).map(stripPropertyExamples);
     } else {

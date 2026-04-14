@@ -6,8 +6,8 @@ Normalizes a Postman-exported OpenAPI document.
 
 ### Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
+| Parameter  | Type              | Description                       |
+| ---------- | ----------------- | --------------------------------- |
 | `document` | `OpenAPIDocument` | The OpenAPI document to normalize |
 
 ### Returns

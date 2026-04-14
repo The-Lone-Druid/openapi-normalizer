@@ -25,13 +25,17 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && eslint src tests",
+    "lint:eslint": "eslint src tests",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "changeset": "changeset",
     "release": "pnpm build && changeset publish",
-    "prepublishOnly": "pnpm lint && pnpm test"
+    "prepublishOnly": "pnpm lint && pnpm format:check && pnpm test"
   },
   "keywords": [
     "openapi",
@@ -73,12 +77,28 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.6.0",
     "@changesets/cli": "^2.30.0",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "@types/node": "^22.15.0",
     "@vitest/coverage-v8": "^4.1.4",
+    "eslint": "^10.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.2",
     "tsup": "^8.5.0",
     "typescript": "^5.8.0",
+    "typescript-eslint": "^8.58.2",
     "vitepress": "^1.6.4",
     "vitest": "^4.1.4"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
   },
   "pnpm": {
     "overrides": {

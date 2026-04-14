@@ -97,15 +97,7 @@ export interface OpenAPIComponents {
 
 export type OpenAPISecurityRequirement = Record<string, string[]>;
 
-export type HttpMethod =
-  | 'get'
-  | 'put'
-  | 'post'
-  | 'delete'
-  | 'options'
-  | 'head'
-  | 'patch'
-  | 'trace';
+export type HttpMethod = 'get' | 'put' | 'post' | 'delete' | 'options' | 'head' | 'patch' | 'trace';
 
 export const HTTP_METHODS: HttpMethod[] = [
   'get',

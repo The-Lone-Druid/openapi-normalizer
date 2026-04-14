@@ -166,13 +166,13 @@ openapi-generator-cli generate \
 
 A raw Postman export — whether from Postman's own "Export as OpenAPI" or from `convertCollection` without normalization — contains issues that break or degrade code generators:
 
-| Problem in raw Postman output | Effect on generated code |
-|---|---|
-| No `schema` on request/response bodies — only `example` | Generator produces `any` / `object` types with no structure |
-| Dozens of noisy HTTP headers (`Content-Length`, `X-Request-Id`, etc.) | Every generated function has 10+ unnecessary parameters |
-| Multiple named `examples` without a single canonical `example` | Mocking tools and form auto-fill don't work |
-| `{{VARIABLE}}`-style server URLs | Generator can't resolve the base URL |
-| Empty `components`, `security`, `contact` objects | Minor noise but can confuse strict validators |
+| Problem in raw Postman output                                         | Effect on generated code                                    |
+| --------------------------------------------------------------------- | ----------------------------------------------------------- |
+| No `schema` on request/response bodies — only `example`               | Generator produces `any` / `object` types with no structure |
+| Dozens of noisy HTTP headers (`Content-Length`, `X-Request-Id`, etc.) | Every generated function has 10+ unnecessary parameters     |
+| Multiple named `examples` without a single canonical `example`        | Mocking tools and form auto-fill don't work                 |
+| `{{VARIABLE}}`-style server URLs                                      | Generator can't resolve the base URL                        |
+| Empty `components`, `security`, `contact` objects                     | Minor noise but can confuse strict validators               |
 
 Running `normalize()` after `convertCollection()` fixes all of these before any generator sees the spec.
 

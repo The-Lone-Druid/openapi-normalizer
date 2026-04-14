@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://the-lone-druid.github.io/openapi-normalizer/
+    about: Read the full docs before opening a bug — your question may already be answered.
+  - name: Discussions
+    url: https://github.com/The-Lone-Druid/openapi-normalizer/discussions
+    about: For questions, ideas, or general discussion — not bugs.

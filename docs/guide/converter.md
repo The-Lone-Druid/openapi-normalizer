@@ -29,10 +29,10 @@ const openapi = convertCollection(postmanCollection);
 
 This is the key feature. Given a Postman request with two saved responses:
 
-| Saved Response | Request Body | Response Body |
-|---|---|---|
-| "Success" | `{"id": 1}` | `{"status": "ok"}` |
-| "Not Found" | `{"id": 999}` | `{"error": "not found"}` |
+| Saved Response | Request Body  | Response Body            |
+| -------------- | ------------- | ------------------------ |
+| "Success"      | `{"id": 1}`   | `{"status": "ok"}`       |
+| "Not Found"    | `{"id": 999}` | `{"error": "not found"}` |
 
 The converter produces:
 
@@ -53,7 +53,7 @@ The converter produces:
     "200": {
       "content": {
         "application/json": {
-          "schema": { "..." : "..." },
+          "schema": { "...": "..." },
           "examples": {
             "Success": { "value": { "status": "ok" } },
             "Not_Found": { "value": { "error": "not found" } }
@@ -69,10 +69,10 @@ Tools like **Swagger UI**, **Stoplight**, and **Redocly** can use the matching k
 
 ## Supported body modes
 
-| Postman mode | OpenAPI media type |
-|---|---|
-| `raw` (JSON) | `application/json` |
-| `formdata` | `multipart/form-data` |
+| Postman mode | OpenAPI media type                  |
+| ------------ | ----------------------------------- |
+| `raw` (JSON) | `application/json`                  |
+| `formdata`   | `multipart/form-data`               |
 | `urlencoded` | `application/x-www-form-urlencoded` |
 
 ## Folder → Tag mapping

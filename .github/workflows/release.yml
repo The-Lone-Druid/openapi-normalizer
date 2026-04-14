@@ -35,6 +35,13 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - name: Configure npm auth for pnpm
+        if: ${{ secrets.NPM_TOKEN != '' }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> $HOME/.npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Resolve publish command
         id: publish-cmd
         env:
@@ -58,3 +65,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Print npm debug log on failure
+        if: failure()
+        run: |
+          echo "=== npm debug log ==="
+          find /home/runner/.npm/_logs -name "*.log" -exec cat {} \; 2>/dev/null || echo "no log found"

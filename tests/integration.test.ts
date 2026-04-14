@@ -96,10 +96,7 @@ function assertValidOpenAPI(doc: OpenAPIDocument, label: string) {
   // Tags should be unique
   if (doc.tags) {
     const tagNames = doc.tags.map((t) => t.name);
-    expect(
-      new Set(tagNames).size,
-      `${label}: duplicate tags found`,
-    ).toBe(tagNames.length);
+    expect(new Set(tagNames).size, `${label}: duplicate tags found`).toBe(tagNames.length);
   }
 
   // Servers should have url
@@ -141,8 +138,13 @@ describe('integration: normalize', () => {
     const result = normalize(raw);
 
     const noisyNames = new Set([
-      'X-Request-Id', 'Content-Length', 'Connection', 'Date',
-      'Set-Cookie', 'Transfer-Encoding', 'Server',
+      'X-Request-Id',
+      'Content-Length',
+      'Connection',
+      'Date',
+      'Set-Cookie',
+      'Transfer-Encoding',
+      'Server',
     ]);
 
     for (const pathItem of Object.values(result.paths!)) {
@@ -173,10 +175,7 @@ describe('integration: normalize', () => {
         for (const resp of Object.values(op.responses)) {
           if (!resp.content) continue;
           for (const mediaObj of Object.values(resp.content)) {
-            expect(
-              mediaObj.examples,
-              'named examples should be collapsed',
-            ).toBeUndefined();
+            expect(mediaObj.examples, 'named examples should be collapsed').toBeUndefined();
           }
         }
       }
