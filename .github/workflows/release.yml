@@ -36,23 +36,24 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Configure npm auth for pnpm
-        if: ${{ secrets.NPM_TOKEN != '' }}
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> $HOME/.npmrc
+          if [ -n "$NPM_TOKEN" ]; then
+            echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> $HOME/.npmrc
+          fi
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Resolve publish command
         id: publish-cmd
-        env:
-          HAS_NPM_TOKEN: ${{ secrets.NPM_TOKEN != '' }}
         run: |
-          if [ "$HAS_NPM_TOKEN" = "true" ]; then
+          if [ -n "$NPM_TOKEN" ]; then
             echo "cmd=pnpm release" >> $GITHUB_OUTPUT
           else
             echo "cmd=" >> $GITHUB_OUTPUT
             echo "::warning::NPM_TOKEN secret is not set — skipping publish. Add it in repo Settings → Secrets → Actions."
           fi
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create Release PR or Publish
         id: changesets
