@@ -86,8 +86,14 @@ describe('mergeSchemas', () => {
   });
 
   it('merges array schemas by merging items', () => {
-    const a: JSONSchema = { type: 'array', items: { type: 'object', properties: { x: { type: 'integer' } } } };
-    const b: JSONSchema = { type: 'array', items: { type: 'object', properties: { y: { type: 'string' } } } };
+    const a: JSONSchema = {
+      type: 'array',
+      items: { type: 'object', properties: { x: { type: 'integer' } } },
+    };
+    const b: JSONSchema = {
+      type: 'array',
+      items: { type: 'object', properties: { y: { type: 'string' } } },
+    };
     expect(mergeSchemas([a, b])).toEqual({
       type: 'array',
       items: {
@@ -107,8 +113,14 @@ describe('mergeSchemas', () => {
   });
 
   it('recursively merges overlapping object properties', () => {
-    const a: JSONSchema = { type: 'object', properties: { data: { type: 'object', properties: { id: { type: 'integer' } } } } };
-    const b: JSONSchema = { type: 'object', properties: { data: { type: 'object', properties: { name: { type: 'string' } } } } };
+    const a: JSONSchema = {
+      type: 'object',
+      properties: { data: { type: 'object', properties: { id: { type: 'integer' } } } },
+    };
+    const b: JSONSchema = {
+      type: 'object',
+      properties: { data: { type: 'object', properties: { name: { type: 'string' } } } },
+    };
     expect(mergeSchemas([a, b])).toEqual({
       type: 'object',
       properties: {

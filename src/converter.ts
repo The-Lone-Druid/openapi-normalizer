@@ -23,7 +23,6 @@ import {
   flattenItems,
   tryParseJSON,
 } from './utils';
-import type { FlatPostmanItem } from './utils';
 
 // ---------------------------------------------------------------------------
 // Internal types for the grouping map
@@ -177,7 +176,7 @@ export function convertCollection(collection: PostmanCollection): OpenAPIDocumen
       const reqSchema: JSONSchema =
         allReqPayloads.length > 0
           ? mergeSchemas(allReqPayloads.map(inferSchema))
-          : op.mainBody?.schema ?? {};
+          : (op.mainBody?.schema ?? {});
 
       const mediaObj: OpenAPIMediaType = { schema: reqSchema };
 

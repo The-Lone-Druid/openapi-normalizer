@@ -206,21 +206,21 @@ Every time `postman-collection.json` is updated in a PR, the CI regenerates `ope
 
 Code generators like `openapi-generator-cli` and `@hey-api/openapi-ts` can fail or produce bloated output when the input spec contains Postman-style noise:
 
-| Issue in raw Postman export | Effect on code generator |
-|---|---|
-| No `schema` on request bodies — only `example` | Generator produces `any` types |
-| Dozens of noisy headers as parameters | Every generated function has 10+ extra params |
-| Multiple named `examples` without correlation | Generated mocks are incomplete |
-| `{{VARIABLE}}` in server URLs | Generator base URL config is broken |
+| Issue in raw Postman export                    | Effect on code generator                      |
+| ---------------------------------------------- | --------------------------------------------- |
+| No `schema` on request bodies — only `example` | Generator produces `any` types                |
+| Dozens of noisy headers as parameters          | Every generated function has 10+ extra params |
+| Multiple named `examples` without correlation  | Generated mocks are incomplete                |
+| `{{VARIABLE}}` in server URLs                  | Generator base URL config is broken           |
 
 `openapi-normalizer` fixes all of these before the generator ever sees the spec.
 
 ## API Reference
 
-| Function | Description |
-|---|---|
-| `convertCollection(collection)` | Converts a Postman Collection (v2.0/v2.1) to an OpenAPI 3.0.3 document |
-| `normalize(doc)` | Normalizes a Postman-exported OpenAPI document — strips noise, infers schemas |
+| Function                        | Description                                                                   |
+| ------------------------------- | ----------------------------------------------------------------------------- |
+| `convertCollection(collection)` | Converts a Postman Collection (v2.0/v2.1) to an OpenAPI 3.0.3 document        |
+| `normalize(doc)`                | Normalizes a Postman-exported OpenAPI document — strips noise, infers schemas |
 
 Both functions are pure — they do not mutate their input and have no side effects.
 

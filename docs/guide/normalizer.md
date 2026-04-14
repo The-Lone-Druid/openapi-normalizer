@@ -12,17 +12,17 @@ const result = normalize(openapiDocument);
 
 ## What it does
 
-| Transform | Before | After |
-|---|---|---|
-| Noisy response headers | `X-Request-Id`, `Content-Length`, `Set-Cookie`, … | Removed |
-| Named examples | `examples: { ex1: {...}, ex2: {...} }` | Single `example` with first value |
-| Missing schemas | Only `examples` exist | Schema inferred from example values |
-| Per-property examples | `{ type: "string", example: "John" }` | `{ type: "string" }` |
-| Duplicate description | `summary` and `description` identical | `description` removed |
-| Empty security | `security: [{}]` | Removed |
-| Postman `{{VAR}}` servers | `url: "{{API_GW}}"` | `url: "/"` with descriptive annotation |
-| Duplicate tags | Same tag name repeated | Deduplicated |
-| Empty components | `securitySchemes: {}` | Removed |
+| Transform                 | Before                                            | After                                  |
+| ------------------------- | ------------------------------------------------- | -------------------------------------- |
+| Noisy response headers    | `X-Request-Id`, `Content-Length`, `Set-Cookie`, … | Removed                                |
+| Named examples            | `examples: { ex1: {...}, ex2: {...} }`            | Single `example` with first value      |
+| Missing schemas           | Only `examples` exist                             | Schema inferred from example values    |
+| Per-property examples     | `{ type: "string", example: "John" }`             | `{ type: "string" }`                   |
+| Duplicate description     | `summary` and `description` identical             | `description` removed                  |
+| Empty security            | `security: [{}]`                                  | Removed                                |
+| Postman `{{VAR}}` servers | `url: "{{API_GW}}"`                               | `url: "/"` with descriptive annotation |
+| Duplicate tags            | Same tag name repeated                            | Deduplicated                           |
+| Empty components          | `securitySchemes: {}`                             | Removed                                |
 
 ## File size reduction
 
@@ -35,6 +35,7 @@ On a typical Postman export, expect **60–70% reduction** in file size. The lar
 ## Example
 
 **Input** (simplified):
+
 ```json
 {
   "paths": {
@@ -68,6 +69,7 @@ On a typical Postman export, expect **60–70% reduction** in file size. The lar
 ```
 
 **Output:**
+
 ```json
 {
   "paths": {

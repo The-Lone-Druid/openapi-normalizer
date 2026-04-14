@@ -4,8 +4,8 @@ Converts a Postman Collection (v2.0/v2.1) to an OpenAPI 3.0.3 document with corr
 
 ## Parameters
 
-| Parameter | Type | Description |
-|---|---|---|
+| Parameter    | Type                | Description                        |
+| ------------ | ------------------- | ---------------------------------- |
 | `collection` | `PostmanCollection` | The Postman Collection JSON object |
 
 ## Returns

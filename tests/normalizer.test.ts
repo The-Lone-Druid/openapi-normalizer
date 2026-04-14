@@ -140,7 +140,8 @@ describe('normalize', () => {
     });
 
     const result = normalize(doc);
-    const schema = result.paths!['/test']!.get!.responses!['200'].content!['application/json'].schema!;
+    const schema =
+      result.paths!['/test']!.get!.responses!['200'].content!['application/json'].schema!;
     expect(schema.properties!.name.example).toBeUndefined();
   });
 

@@ -192,12 +192,11 @@ describe('convertCollection', () => {
     });
 
     const result = convertCollection(collection);
-    const opIds = Object.values(result.paths!)
-      .flatMap((pathItem) =>
-        Object.values(pathItem as Record<string, { operationId?: string }>)
-          .filter((o): o is { operationId: string } => typeof o === 'object' && !!o?.operationId)
-          .map((o) => o.operationId),
-      );
+    const opIds = Object.values(result.paths!).flatMap((pathItem) =>
+      Object.values(pathItem as Record<string, { operationId?: string }>)
+        .filter((o): o is { operationId: string } => typeof o === 'object' && !!o?.operationId)
+        .map((o) => o.operationId),
+    );
 
     // All operationIds should be unique
     expect(new Set(opIds).size).toBe(opIds.length);
