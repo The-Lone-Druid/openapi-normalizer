@@ -1,8 +1,8 @@
 {
   "name": "openapi-normalizer",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Convert Postman Collections to OpenAPI 3.x and normalize bloated Postman-exported specs — correlated examples, inferred schemas, zero dependencies.",
-  "author": "Zahid Shaikh <reachtozahid@gmail.com> (https://github.com/The-Lone-Druid)",
+  "author": "The-Lone-Druid (https://github.com/The-Lone-Druid)",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -58,7 +58,6 @@
     "zero-dependency",
     "cli"
   ],
-  "author": "The-Lone-Druid (https://github.com/The-Lone-Druid)",
   "license": "MIT",
   "repository": {
     "type": "git",
