@@ -58,3 +58,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Print npm debug log on failure
+        if: failure()
+        run: |
+          echo "=== npm debug log ==="
+          find /home/runner/.npm/_logs -name "*.log" -exec cat {} \; 2>/dev/null || echo "no log found"
