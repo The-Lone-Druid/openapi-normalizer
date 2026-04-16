@@ -4,6 +4,7 @@ import type {
   PostmanItem,
   PostmanRequestDef,
   PostmanResponse,
+  PostmanAuth,
   JSONSchema,
 } from './types';
 import { isPostmanFolder } from './types';
@@ -101,15 +102,23 @@ export function parsePostmanUrl(url: string | { raw?: string } | undefined): Par
   const raw = typeof url === 'object' ? (url.raw ?? '') : url;
   const match = raw.match(/^\{\{([^}]+)\}\}(\/.*)?$/);
   if (match) {
-    return { serverVar: match[1], path: match[2] || '/' };
+    const pathWithQuery = match[2] || '/';
+    return { serverVar: match[1], path: stripQueryString(pathWithQuery) };
   }
 
   try {
     const u = new URL(raw);
     return { serverVar: null, path: u.pathname || '/' };
   } catch {
-    return { serverVar: null, path: raw.startsWith('/') ? raw : `/${raw}` };
+    const pathPart = raw.startsWith('/') ? raw : `/${raw}`;
+    return { serverVar: null, path: stripQueryString(pathPart) };
   }
+}
+
+/** Remove query string from a path */
+function stripQueryString(path: string): string {
+  const qIdx = path.indexOf('?');
+  return qIdx >= 0 ? path.slice(0, qIdx) : path;
 }
 
 // ---------------------------------------------------------------------------
@@ -130,7 +139,13 @@ export function parseBody(body: PostmanBody | undefined | null): ParsedBody | nu
 
   if (body.mode === 'raw') {
     const isJson = body.options?.raw?.language === 'json';
-    const parsed = isJson ? tryParseJSON(body.raw) : undefined;
+    // Try to parse as JSON: explicit json mode, or auto-detect if raw looks like JSON
+    let parsed: unknown;
+    if (isJson) {
+      parsed = tryParseJSON(body.raw);
+    } else if (body.raw && /^\s*[{\[]/.test(body.raw)) {
+      parsed = tryParseJSON(body.raw);
+    }
     return {
       mediaType: 'application/json',
       schema: parsed !== undefined ? inferSchema(parsed) : { type: 'string' },
@@ -175,12 +190,21 @@ export function parseBody(body: PostmanBody | undefined | null): ParsedBody | nu
 /**
  * Convert a Postman header array to OpenAPI parameter objects.
  */
+/** Headers that should not appear as OpenAPI parameters (handled elsewhere) */
+const SKIP_HEADER_PARAMS = new Set(['content-type', 'authorization', 'accept']);
+
 export function headersToParameters(
   headers: PostmanHeader[] | undefined,
 ): { name: string; in: 'header'; schema: JSONSchema; example?: string }[] {
   if (!Array.isArray(headers)) return [];
   return headers
-    .filter((h) => !h.disabled && h.key && !isNoisyHeader(h.key))
+    .filter(
+      (h) =>
+        !h.disabled &&
+        h.key &&
+        !isNoisyHeader(h.key) &&
+        !SKIP_HEADER_PARAMS.has(h.key.toLowerCase()),
+    )
     .map((h) => ({
       name: h.key,
       in: 'header' as const,
@@ -244,16 +268,23 @@ export interface FlatPostmanItem {
   request: PostmanRequestDef;
   response: PostmanResponse[];
   _tags: string[];
+  _auth?: PostmanAuth;
 }
 
 /**
- * Recursively flatten Postman items, tracking folder names as tags.
+ * Recursively flatten Postman items, tracking folder names as tags
+ * and inheriting auth from parent folders.
  */
-export function flattenItems(items: PostmanItem[], tags: string[] = []): FlatPostmanItem[] {
+export function flattenItems(
+  items: PostmanItem[],
+  tags: string[] = [],
+  parentAuth?: PostmanAuth,
+): FlatPostmanItem[] {
   const result: FlatPostmanItem[] = [];
   for (const item of items) {
     if (isPostmanFolder(item)) {
-      result.push(...flattenItems(item.item, [...tags, item.name]));
+      const folderAuth = item.auth ?? parentAuth;
+      result.push(...flattenItems(item.item, [...tags, item.name], folderAuth));
     } else if ('request' in item && !isPostmanFolder(item)) {
       result.push({
         name: item.name,
@@ -261,6 +292,7 @@ export function flattenItems(items: PostmanItem[], tags: string[] = []): FlatPos
         request: item.request,
         response: item.response ?? [],
         _tags: tags,
+        _auth: parentAuth,
       });
     }
   }

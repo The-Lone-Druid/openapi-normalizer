@@ -113,6 +113,27 @@ describe('parsePostmanUrl', () => {
       path: '/',
     });
   });
+
+  it('strips query string from path', () => {
+    expect(parsePostmanUrl('{{API}}/task?completed=true')).toEqual({
+      serverVar: 'API',
+      path: '/task',
+    });
+  });
+
+  it('strips query string with multiple params', () => {
+    expect(parsePostmanUrl('{{API}}/task?limit=2&skip=10')).toEqual({
+      serverVar: 'API',
+      path: '/task',
+    });
+  });
+
+  it('strips query string from bare path', () => {
+    expect(parsePostmanUrl('/users?active=true')).toEqual({
+      serverVar: null,
+      path: '/users',
+    });
+  });
 });
 
 describe('parseBody', () => {
@@ -173,6 +194,33 @@ describe('parseBody', () => {
   it('returns null for unknown body mode', () => {
     expect(parseBody({ mode: 'graphql' as never })).toBeNull();
   });
+
+  it('auto-detects JSON from raw body without language hint', () => {
+    const result = parseBody({
+      mode: 'raw',
+      raw: '{"email":"test@example.com","password":"12345678"}',
+    });
+    expect(result).toEqual({
+      mediaType: 'application/json',
+      schema: {
+        type: 'object',
+        properties: {
+          email: { type: 'string' },
+          password: { type: 'string' },
+        },
+      },
+      exampleValue: { email: 'test@example.com', password: '12345678' },
+    });
+  });
+
+  it('auto-detects JSON array from raw body without language hint', () => {
+    const result = parseBody({
+      mode: 'raw',
+      raw: '[{"id":1},{"id":2}]',
+    });
+    expect(result!.mediaType).toBe('application/json');
+    expect(result!.exampleValue).toEqual([{ id: 1 }, { id: 2 }]);
+  });
 });
 
 describe('headersToParameters', () => {
@@ -194,6 +242,17 @@ describe('headersToParameters', () => {
   it('omits example for template values', () => {
     const params = headersToParameters([{ key: 'apiKey', value: '{{API_KEY}}' }]);
     expect(params[0].example).toBeUndefined();
+  });
+
+  it('skips Authorization, Content-Type, and Accept headers', () => {
+    const params = headersToParameters([
+      { key: 'Authorization', value: 'Bearer token123' },
+      { key: 'content-type', value: 'application/json' },
+      { key: 'Accept', value: 'application/json' },
+      { key: 'X-Custom', value: 'keep-me' },
+    ]);
+    expect(params).toHaveLength(1);
+    expect(params[0].name).toBe('X-Custom');
   });
 });
 

@@ -1,9 +1,18 @@
 export { normalize } from './normalizer';
 export { convertCollection } from './converter';
+export {
+  inferSchema,
+  mergeSchemas,
+  stripPropertyExamples,
+  inferFormat,
+  inferRequired,
+} from './schema';
+export type { InferSchemaOptions } from './schema';
 export type {
   OpenAPIDocument,
   OpenAPIInfo,
   OpenAPIServer,
+  OpenAPIServerVariable,
   OpenAPITag,
   OpenAPIPathItem,
   OpenAPIOperation,
@@ -30,4 +39,8 @@ export type {
   PostmanUrlencodedField,
   PostmanAuth,
   PostmanResponse,
+  PostmanVariable,
+  PostmanQueryParam,
+  NormalizeOptions,
+  ConvertOptions,
 } from './types';

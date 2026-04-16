@@ -10,6 +10,30 @@ import { normalize } from 'openapi-normalizer';
 const result = normalize(openapiDocument);
 ```
 
+## Options
+
+Pass a `NormalizeOptions` object as the second argument to customise behaviour:
+
+```ts
+import { normalize } from 'openapi-normalizer';
+
+const result = normalize(doc, {
+  preserveHeaders: ['X-Request-Id', 'X-Correlation-Id'],
+  additionalNoisyHeaders: ['X-Internal-Trace'],
+  stripXExtensions: true,
+  keepExamples: true,
+  inferSchemas: false, // default: true
+});
+```
+
+| Option                   | Type       | Default | Description                                            |
+| ------------------------ | ---------- | ------- | ------------------------------------------------------ |
+| `preserveHeaders`        | `string[]` | `[]`    | Header names to keep (bypass noisy-header stripping)   |
+| `additionalNoisyHeaders` | `string[]` | `[]`    | Extra header names to treat as noisy and remove        |
+| `stripXExtensions`       | `boolean`  | `false` | Remove all `x-*` vendor extension keys                 |
+| `keepExamples`           | `boolean`  | `false` | Preserve named `examples` instead of collapsing        |
+| `inferSchemas`           | `boolean`  | `true`  | Infer schemas from example values when schema is empty |
+
 ## What it does
 
 | Transform                 | Before                                            | After                                  |

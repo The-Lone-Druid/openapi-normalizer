@@ -16,6 +16,41 @@ import { convertCollection } from 'openapi-normalizer';
 const openapi = convertCollection(postmanCollection);
 ```
 
+## Options
+
+Pass a `ConvertOptions` object as the second argument:
+
+```ts
+import { convertCollection } from 'openapi-normalizer';
+
+const openapi = convertCollection(collection, {
+  inferRequired: true,
+  inferFormats: true,
+  operationIdStyle: 'kebab-case',
+  tagFromFolder: false,
+  defaultContentType: 'application/json',
+});
+```
+
+| Option               | Type                                          | Default              | Description                                               |
+| -------------------- | --------------------------------------------- | -------------------- | --------------------------------------------------------- |
+| `inferRequired`      | `boolean`                                     | `false`              | Mark properties present in ALL examples as `required`     |
+| `inferFormats`       | `boolean`                                     | `false`              | Detect string formats (uuid, date-time, email, uri, etc.) |
+| `tagFromFolder`      | `boolean`                                     | `true`               | Use Postman folder names as OpenAPI tags                  |
+| `operationIdStyle`   | `'camelCase' \| 'snake_case' \| 'kebab-case'` | `'camelCase'`        | Style for generated operationIds                          |
+| `defaultContentType` | `string`                                      | `'application/json'` | Fallback Content-Type when none can be detected           |
+
+## Auth Mapping
+
+If the Postman Collection has a top-level `auth` object, the converter maps it to an OpenAPI `securitySchemes` entry and applies it globally:
+
+| Postman `auth.type` | OpenAPI Security Scheme                               |
+| ------------------- | ----------------------------------------------------- |
+| `bearer`            | `{ type: 'http', scheme: 'bearer' }`                  |
+| `basic`             | `{ type: 'http', scheme: 'basic' }`                   |
+| `apikey`            | `{ type: 'apiKey', in: 'header', name: 'X-API-Key' }` |
+| `oauth2`            | `{ type: 'oauth2', flows: { implicit: { ... } } }`    |
+
 ## What it produces
 
 - **OpenAPI 3.0.3** compliant output
